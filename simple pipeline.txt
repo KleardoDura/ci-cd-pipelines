@@ -1,0 +1,43 @@
+name: "Test Pipeline-$(Date: 'HH:mm dd/MM/yyyy')"
+trigger: none
+variables:
+  name: Kleardo
+  company: ABS
+  app: calculator
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Build
+  displayName: BUILD_${{variables.app}}
+  jobs:
+  - job: init_npm
+    displayName: NPM INIT
+    steps:
+    - script: echo npm init
+    - script: echo mos bej npm init sepse ngec, pret interaction nga useri
+    - script: |
+        echo "The value of app is: $(app)"
+  - job: Install_npm
+    displayName: NPM INST
+    dependsOn: init_npm
+    steps:
+    - script: echo Hi!
+    - script: echo npm install
+    
+  - job: Start_npm
+    displayName: NPM STR
+    dependsOn:
+    - init_npm
+    - Install_npm
+    steps:
+    - script: echo start
+    - script: echo npm start
+
+- stage: Test
+  displayName: TEST_${{variables.app}}
+  jobs:
+    - job: run_test
+      displayName: RUN TESTS
+      steps:
+        - script: echo run tests   
